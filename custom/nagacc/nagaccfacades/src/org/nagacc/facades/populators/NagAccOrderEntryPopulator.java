@@ -10,12 +10,13 @@ import de.hybris.platform.servicelayer.dto.converter.Converter;
 
 public class NagAccOrderEntryPopulator implements Populator<AbstractOrderEntryModel, OrderEntryData> {
     private Converter<SellerModel, SellerData> sellerConverter;
+
     @Override
     public void populate(AbstractOrderEntryModel abstractOrderEntryModel, OrderEntryData orderEntryData)
             throws ConversionException {
-          if(null!= abstractOrderEntryModel.getSeller()){
-              orderEntryData.setSeller(sellerConverter.convert(abstractOrderEntryModel.getSeller()));
-          }
+        if (null != abstractOrderEntryModel.getSeller()) {
+            orderEntryData.setSeller(sellerConverter.convert(abstractOrderEntryModel.getSeller()));
+        }
     }
 
     public void setSellerConverter(

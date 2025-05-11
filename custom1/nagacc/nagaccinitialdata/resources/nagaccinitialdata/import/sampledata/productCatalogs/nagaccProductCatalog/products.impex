@@ -1,0 +1,106 @@
+# -----------------------------------------------------------------------
+# Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+# -----------------------------------------------------------------------
+# ImpEx for Importing Products
+
+# Macros / Replacement Parameter definitions
+$productCatalog = electronicsProductCatalog
+$productCatalogName = nagacc Product Catalog
+
+$catalogVersion = catalogversion(catalog(id[default = $productCatalog]), version[default = 'Staged'])[unique = true, default = $productCatalog:Staged]
+$supercategories = supercategories(code, $catalogVersion)
+$baseProduct = baseProduct(code, $catalogVersion)
+$approved = approvalstatus(code)[default = 'approved']
+$prices = Europe1prices[translator = de.hybris.platform.europe1.jalo.impex.Europe1PricesTranslator]
+$taxGroup = Europe1PriceFactory_PTG(code)[default = jp-taxes]
+$thumbnail = thumbnail(code, $catalogVersion)
+$picture = picture(code, $catalogVersion)
+$thumbnails = thumbnails(code, $catalogVersion)
+$detail = detail(code, $catalogVersion)
+$normal = normal(code, $catalogVersion)
+$others = others(code, $catalogVersion)
+$data_sheet = data_sheet(code, $catalogVersion)
+$medias = medias(code, $catalogVersion)
+$galleryImages = galleryImages(qualifier, $catalogVersion)
+$siteResource = jar:org.assignment.core.constants.NagaccCoreConstants&/nagacccore/import
+
+# Insert Products
+INSERT_UPDATE Product; code[unique = true]; $supercategories; manufacturerName; manufacturerAID; unit(code); ean      ; $catalogVersion; $approved; name[lang = en]  ; name[lang = de]
+                     ; nagProduct1        ; 576,brand_5     ;                 ;                ; pieces    ; 11112222 ;                ;          ; Nagarro Product1 ; Nagarro Product1
+                     ; nagProduct2        ; 576,brand_5     ;                 ;                ; pieces    ; 11113333 ;                ;          ; Nagarro Product2 ; Nagarro Product1
+                     ; nagProduct3        ; 576,brand_5     ;                 ;                ; pieces    ; 11114444 ;                ;          ; Nagarro Product3 ; Nagarro Product1
+                     ; nagProduct4        ; 576,brand_5     ;                 ;                ; pieces    ; 11115555 ;                ;          ; Nagarro Product4 ; Nagarro Product1
+
+# Stock
+INSERT_UPDATE StockLevel; available; warehouse(code)[unique = true]; inStockStatus(code); maxPreOrder; maxStockLevelHistoryCount; overSelling; preOrder; productCode[unique = true]; reserved
+                        ; 4        ; warehouse_n                   ; notSpecified       ; 1          ; 0                        ; 0          ; 0       ; nagProduct1               ; 0
+                        ; 5        ; warehouse_n                   ; notSpecified       ; 1          ; 0                        ; 0          ; 0       ; nagProduct2               ; 0
+                        ; 6        ; warehouse_n                   ; notSpecified       ; 1          ; 0                        ; 0          ; 0       ; nagProduct3               ; 0
+                        ; 8        ; warehouse_n                   ; notSpecified       ; 1          ; 0                        ; 0          ; 0       ; nagProduct4               ; 0
+
+UPDATE Product; code[unique = true]; $catalogVersion; stockLevels(productCode, warehouse(code)); vendors(code)
+              ; nagProduct1        ;                ; nagProduct1:warehouse_n                  ;
+              ; nagProduct2        ;                ; nagProduct2:warehouse_n                  ;
+              ; nagProduct3        ;                ; nagProduct3:warehouse_n                  ;
+              ; nagProduct4        ;                ; nagProduct4:warehouse_n                  ;
+
+# let's update prices
+UPDATE Product; code[unique = true]; $approved; $catalogVersion; $taxGroup
+              ; nagProduct1        ;          ;                ;
+              ; nagProduct2        ;          ;                ;
+              ; nagProduct3        ;          ;                ;
+              ; nagProduct4        ;          ;                ;
+
+INSERT_UPDATE PriceRow; productId[unique = true]; unit(code[unique = true, default = pieces]); currency(isocode)[unique = true]; price; minqtd; unitFactor; net
+                      ; nagProduct1             ; pieces                                     ; USD                             ; 1595 ; 1     ; 1         ; false
+                      ; nagProduct2             ; pieces                                     ; USD                             ; 1200 ; 1     ; 1         ; false
+                      ; nagProduct3             ; pieces                                     ; USD                             ; 800  ; 1     ; 1         ; false
+                      ; nagProduct4             ; pieces                                     ; USD                             ; 1000 ; 1     ; 1         ; false
+
+
+# Update Media
+INSERT_UPDATE Media; mediaFormat(qualifier); code[unique = true]        ; @media[translator = de.hybris.platform.impex.jalo.media.MediaDataTranslator]; mime[default = 'image/jpeg']; $catalogVersion; folder(qualifier)
+                   ; 515Wx515H             ; /515Wx515H/nagProduct1.jpg ; $siteResource/images/515Wx515H/nagProduct1.jpg                              ;                             ;                ; images
+                   ; 300Wx300H             ; /300Wx300H/nagProduct1.jpg ; $siteResource/images/300Wx300H/nagProduct1.jpg                              ;                             ;                ; images
+                   ; 96Wx96H               ; /96Wx96H/nagProduct1.jpg   ; $siteResource/images/96Wx96H/nagProduct1.jpg                                ;                             ;                ; images
+                   ; 65Wx65H               ; /65Wx65H/nagProduct1.jpg   ; $siteResource/images/65Wx65H/nagProduct1.jpg                                ;                             ;                ; images
+                   ; 30Wx30H               ; /30Wx30H/nagProduct1.jpg   ; $siteResource/images/30Wx30H/nagProduct1.jpg                                ;                             ;                ; images
+                   ; 515Wx515H             ; /515Wx515H/nagProduct2.jpg ; $siteResource/images/515Wx515H/nagProduct2.jpg                              ;                             ;                ; images
+                   ; 300Wx300H             ; /300Wx300H/nagProduct2.jpg ; $siteResource/images/300Wx300H/nagProduct2.jpg                              ;                             ;                ; images
+                   ; 96Wx96H               ; /96Wx96H/nagProduct2.jpg   ; $siteResource/images/96Wx96H/nagProduct2.jpg                                ;                             ;                ; images
+                   ; 65Wx65H               ; /65Wx65H/nagProduct2.jpg   ; $siteResource/images/65Wx65H/nagProduct2.jpg                                ;                             ;                ; images
+                   ; 30Wx30H               ; /30Wx30H/nagProduct2.jpg   ; $siteResource/images/30Wx30H/nagProduct2.jpg                                ;                             ;                ; images
+                   ; 515Wx515H             ; /515Wx515H/nagProduct3.jpg ; $siteResource/images/515Wx515H/nagProduct3.jpg                              ;                             ;                ; images
+                   ; 300Wx300H             ; /300Wx300H/nagProduct3.jpg ; $siteResource/images/300Wx300H/nagProduct3.jpg                              ;                             ;                ; images
+                   ; 96Wx96H               ; /96Wx96H/nagProduct3.jpg   ; $siteResource/images/96Wx96H/nagProduct3.jpg                                ;                             ;                ; images
+                   ; 65Wx65H               ; /65Wx65H/nagProduct3.jpg   ; $siteResource/images/65Wx65H/nagProduct3.jpg                                ;                             ;                ; images
+                   ; 30Wx30H               ; /30Wx30H/nagProduct3.jpg   ; $siteResource/images/30Wx30H/nagProduct3.jpg                                ;                             ;                ; images
+                   ; 515Wx515H             ; /515Wx515H/nagProduct4.jpg ; $siteResource/images/515Wx515H/nagProduct4.jpg                              ;                             ;                ; images
+                   ; 300Wx300H             ; /300Wx300H/nagProduct4.jpg ; $siteResource/images/300Wx300H/nagProduct4.jpg                              ;                             ;                ; images
+                   ; 96Wx96H               ; /96Wx96H/nagProduct4.jpg   ; $siteResource/images/96Wx96H/nagProduct4.jpg                                ;                             ;                ; images
+                   ; 65Wx65H               ; /65Wx65H/nagProduct4.jpg   ; $siteResource/images/65Wx65H/nagProduct4.jpg                                ;                             ;                ; images
+                   ; 30Wx30H               ; /30Wx30H/nagProduct4.jpg   ; $siteResource/images/30Wx30H/nagProduct4.jpg                                ;                             ;                ; images
+
+INSERT_UPDATE MediaContainer; qualifier[unique = true]; $medias                                                                                                                          ; $catalogVersion
+                            ; nagProduct1-media       ; /515Wx515H/nagProduct1.jpg,/300Wx300H/nagProduct1.jpg,/96Wx96H/nagProduct1.jpg,/65Wx65H/nagProduct1.jpg,/30Wx30H/nagProduct1.jpg ;
+                            ; nagProduct2-media       ; /515Wx515H/nagProduct2.jpg,/300Wx300H/nagProduct2.jpg,/96Wx96H/nagProduct2.jpg,/65Wx65H/nagProduct2.jpg,/30Wx30H/nagProduct2.jpg ;
+                            ; nagProduct3-media       ; /515Wx515H/nagProduct3.jpg,/300Wx300H/nagProduct3.jpg,/96Wx96H/nagProduct3.jpg,/65Wx65H/nagProduct3.jpg,/30Wx30H/nagProduct3.jpg ;
+                            ; nagProduct4-media       ; /515Wx515H/nagProduct4.jpg,/300Wx300H/nagProduct4.jpg,/96Wx96H/nagProduct4.jpg,/65Wx65H/nagProduct4.jpg,/30Wx30H/nagProduct4.jpg ;
+
+UPDATE Product; code[unique = true]; $picture                   ; $thumbnail               ; $detail; $others                                                                      ; $normal                    ; $thumbnails              ; $galleryImages    ; $catalogVersion
+              ; nagProduct1        ; /300Wx300H/nagProduct1.jpg ; /96Wx96H/nagProduct1.jpg ;        ; /515Wx515H/nagProduct1.jpg,/65Wx65H/nagProduct1.jpg,/30Wx30H/nagProduct1.jpg ; /300Wx300H/nagProduct1.jpg ; /96Wx96H/nagProduct1.jpg ; nagProduct1-media ;
+              ; nagProduct2        ; /300Wx300H/nagProduct2.jpg ; /96Wx96H/nagProduct2.jpg ;        ; /515Wx515H/nagProduct2.jpg,/65Wx65H/nagProduct2.jpg,/30Wx30H/nagProduct2.jpg ; /300Wx300H/nagProduct2.jpg ; /96Wx96H/nagProduct2.jpg ; nagProduct2-media ;
+              ; nagProduct3        ; /300Wx300H/nagProduct3.jpg ; /96Wx96H/nagProduct3.jpg ;        ; /515Wx515H/nagProduct3.jpg,/65Wx65H/nagProduct3.jpg,/30Wx30H/nagProduct3.jpg ; /300Wx300H/nagProduct3.jpg ; /96Wx96H/nagProduct3.jpg ; nagProduct3-media ;
+              ; nagProduct4        ; /300Wx300H/nagProduct4.jpg ; /96Wx96H/nagProduct4.jpg ;        ; /515Wx515H/nagProduct4.jpg,/65Wx65H/nagProduct4.jpg,/30Wx30H/nagProduct4.jpg ; /300Wx300H/nagProduct4.jpg ; /96Wx96H/nagProduct4.jpg ; nagProduct4-media ;
+
+INSERT_UPDATE Seller; sellerCode[unique=true] ; sellerName[lang = en]; leadTime
+                    ; nagSeller1 ; Nagarro Seller1      ; 18
+                    ; nagSeller2 ; Nagarro Seller2      ; 19
+                    ; nagSeller3 ; Nagarro Seller3      ; 20
+                    ; nagSeller4 ; Nagarro Seller4      ; 21
+
+UPDATE Product; code[unique = true]; $catalogVersion; products(sellerCode)
+              ; nagProduct1        ;                ; nagSeller1
+              ; nagProduct2        ;                ; nagSeller1,nagSeller2
+              ; nagProduct3        ;                ; nagSeller1,nagSeller2,nagSeller3
+              ; nagProduct4        ;                ; nagSeller1,nagSeller2,nagSeller3,nagSeller4

@@ -36,35 +36,33 @@ public class NagAccSellerAddToCartMethodHook implements CommerceAddToCartMethodH
     @Override
     public void afterAddToCart(CommerceCartParameter parameters, CommerceCartModification result) {
 
-            if (result.getQuantityAdded() > 0) {
-                final AbstractOrderEntryModel entry = result.getEntry();
-                final ProductModel product = entry.getProduct();
+        if (result.getQuantityAdded() > 0) {
+            final AbstractOrderEntryModel entry = result.getEntry();
+            final ProductModel product = entry.getProduct();
 
-                // Check if the product is already in the cart by checking the existing cart entries
-                if (isProductInCartAndHasSeller(product)) {
-                    LOG.info("Product {} is already in the cart. Seller will not be reassigned.", product.getCode());
-                } else {
-                    // If it's the first time, assign a seller
-                    assignSellerToProduct(entry);
-                }
+            if (isProductInCartAndHasSeller(product)) {
+                LOG.info("Product {} is already in the cart. Seller will not be reassigned.", product.getCode());
+            } else {
+                assignSellerToProduct(entry);
             }
         }
+    }
 
     private boolean isProductInCartAndHasSeller(ProductModel product) {
         CartModel cart = cartService.getSessionCart();
         for (AbstractOrderEntryModel entry : cart.getEntries()) {
-            if (entry.getProduct().equals(product) && entry.getSeller()!= null) {
-                return true; // Product already in the cart
+            if (entry.getProduct().equals(product) && entry.getSeller() != null) {
+                return true;
             }
         }
-        return false; // Product is not in the cart
+        return false;
     }
 
     private void assignSellerToProduct(AbstractOrderEntryModel entry) {
         final List<SellerModel> sellers = entry.getProduct().getSeller().stream().collect(Collectors.toList());
         if (CollectionUtils.isNotEmpty(sellers)) {
-            entry.setSeller(sellers.get(0)); // You can change logic here to choose the seller based on criteria
-            modelService.save(entry); // Save the updated cart entry
+            entry.setSeller(sellers.get(0));
+            modelService.save(entry);
             LOG.info("Assigned seller {} to product {}", entry.getSeller().getName(), entry.getProduct().getCode());
         } else {
             LOG.warn("No sellers found for product {}", entry.getProduct().getCode());

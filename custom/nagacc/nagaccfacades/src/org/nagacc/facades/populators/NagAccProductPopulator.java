@@ -15,37 +15,32 @@ import org.springframework.beans.factory.annotation.Required;
 
 import java.util.ArrayList;
 import java.util.List;
+
 /**
  * Populates {@link ProductData} with genders
  */
-public class NagAccProductPopulator implements Populator<ProductModel, ProductData>
-{
-	private Converter<SellerModel, SellerData> sellerConverter;
+public class NagAccProductPopulator implements Populator<ProductModel, ProductData> {
+    private Converter<SellerModel, SellerData> sellerConverter;
 
-	protected Converter<SellerModel, SellerData> getSellerConverter()
-	{
-		return sellerConverter;
-	}
+    protected Converter<SellerModel, SellerData> getSellerConverter() {
+        return sellerConverter;
+    }
 
-	@Required
-	public void setSellerConverter(final Converter<SellerModel, SellerData> sellerConverter)
-	{
-		this.sellerConverter = sellerConverter;
-	}
+    @Required
+    public void setSellerConverter(final Converter<SellerModel, SellerData> sellerConverter) {
+        this.sellerConverter = sellerConverter;
+    }
 
-	@Override
-	public void populate(final ProductModel source, final ProductData target) throws ConversionException
-	{
+    @Override
+    public void populate(final ProductModel source, final ProductData target) throws ConversionException {
 
-			if (CollectionUtils.isNotEmpty(source.getSeller()))
-			{
-				final List<SellerData> sellers = new ArrayList<SellerData>();
-				for (final SellerModel seller : source.getSeller())
-				{
-					sellers.add(getSellerConverter().convert(seller));
-				}
-				target.setSellers(sellers);
-			}
+        if (CollectionUtils.isNotEmpty(source.getSeller())) {
+            final List<SellerData> sellers = new ArrayList<SellerData>();
+            for (final SellerModel seller : source.getSeller()) {
+                sellers.add(getSellerConverter().convert(seller));
+            }
+            target.setSellers(sellers);
+        }
 
-}
+    }
 }

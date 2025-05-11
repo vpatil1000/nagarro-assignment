@@ -553,11 +553,15 @@
 
 	<bean id="commerceAddToCartMethodHooksListMergeDirective"
 		  depends-on="commerceAddToCartMethodHooks" parent="listMergeDirective">
-		<property name="add" ref="nagaccSellerAddToCartMethodHook" />
+		<property name="add" ref="nagaccSellerAddToCartMethodHook"/>
 	</bean>
 
-	<bean id="nagAccTodayDispatchOrderToSiteJob" class="org.nagacc.core.job.NagAccTodayDispatchOrderToSiteJobPerformable" parent="abstractJobPerformable">
+	<bean id="nagAccOrderDao" class="org.nagacc.core.dao.impl.DefaultNagAccOrderDaoOrderDao"/>
+
+	<bean id="nagAccTodayDispatchOrderToSiteJob"
+		  class="org.nagacc.core.job.NagAccTodayDispatchOrderToSiteJobPerformable" parent="abstractJobPerformable">
 		<property name="modelService" ref="modelService"/>
+		<property name="nagAccOrderDao" ref="nagAccOrderDao"/>
 	</bean>
 
 </beans>

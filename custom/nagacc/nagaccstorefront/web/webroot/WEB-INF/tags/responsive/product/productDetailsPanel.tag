@@ -4,6 +4,7 @@
 <%@ taglib prefix="ycommerce" uri="http://hybris.com/tld/ycommercetags"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
 <div class="product-details page-title">
 	<ycommerce:testId code="productDetails_productNamePrice_label_${product.code}">
@@ -27,7 +28,7 @@
 						</ycommerce:testId>
 						<div class="description">${ycommerce:sanitizeHTML(product.summary)}</div>
 						<c:if test="${not empty product.sellers}">
-                             <h3><b>Available Sellers</b></h3>
+                             <h3><b><spring:theme code="product.seller"/></b></h3>
                                  <ul>
                                      <c:forEach items="${product.sellers}" var="seller">
                                        <li>${seller.name}</li>

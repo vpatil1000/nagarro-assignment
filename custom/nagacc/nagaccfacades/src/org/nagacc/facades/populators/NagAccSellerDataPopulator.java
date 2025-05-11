@@ -11,13 +11,11 @@ import de.hybris.platform.servicelayer.dto.converter.ConversionException;
 /**
  * Populates {@link SellerData} with genders
  */
-public class NagAccSellerDataPopulator implements Populator<SellerModel, SellerData>
-{
+public class NagAccSellerDataPopulator implements Populator<SellerModel, SellerData> {
 
-	@Override
-	public void populate(final SellerModel source, final SellerData target) throws ConversionException
-	{
-		target.setCode(source.getCode());
-		target.setName(source.getName());
-}
+    @Override
+    public void populate(final SellerModel source, final SellerData target) throws ConversionException {
+        target.setCode(source.getCode());
+        target.setName(source.getName());
+    }
 }

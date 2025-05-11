@@ -10,14 +10,12 @@ import org.apache.commons.lang3.StringUtils;
 
 public class NagAccSellerFacetDisplayNameProvider extends AbstractFacetValueDisplayNameProvider {
 
-		@Override
-		public String getDisplayName(final SearchQuery query, final IndexedProperty property, final String facetValue)
-		{
-			if (StringUtils.isNotBlank(facetValue))
-			{
-				return facetValue;
-			}
-			return StringUtils.EMPTY;
-		}
+    @Override
+    public String getDisplayName(final SearchQuery query, final IndexedProperty property, final String facetValue) {
+        if (StringUtils.isNotBlank(facetValue)) {
+            return facetValue;
+        }
+        return StringUtils.EMPTY;
+    }
 
-	}
+}

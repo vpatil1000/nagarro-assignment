@@ -1,7 +1,7 @@
 /*
  * ----------------------------------------------------------------
  * --- WARNING: THIS FILE IS GENERATED AND WILL BE OVERWRITTEN! ---
- * --- Generated at 09-May-2025, 9:15:00 pm                     ---
+ * --- Generated at 11-May-2025, 2:29:21 pm                     ---
  * ----------------------------------------------------------------
  */
 package org.nagacc.core.jalo;
@@ -34,6 +34,7 @@ import org.nagacc.core.jalo.ApparelSizeVariantProduct;
 import org.nagacc.core.jalo.ApparelStyleVariantProduct;
 import org.nagacc.core.jalo.ElectronicsColorVariantProduct;
 import org.nagacc.core.jalo.Seller;
+import org.nagacc.core.jalo.SellerCarouselComponent;
 
 /**
  * Generated class for type <code>NagaccCoreManager</code>.
@@ -202,6 +203,32 @@ public abstract class GeneratedNagaccCoreManager extends Extension
 	public Seller createSeller(final Map attributeValues)
 	{
 		return createSeller( getSession().getSessionContext(), attributeValues );
+	}
+	
+	public SellerCarouselComponent createSellerCarouselComponent(final SessionContext ctx, final Map attributeValues)
+	{
+		try
+		{
+			ComposedType type = getTenant().getJaloConnection().getTypeManager().getComposedType( NagaccCoreConstants.TC.SELLERCAROUSELCOMPONENT );
+			return (SellerCarouselComponent)type.newInstance( ctx, attributeValues );
+		}
+		catch( JaloGenericCreationException e)
+		{
+			final Throwable cause = e.getCause();
+			throw (cause instanceof RuntimeException ?
+			(RuntimeException)cause
+			:
+			new JaloSystemException( cause, cause.getMessage(), e.getErrorCode() ) );
+		}
+		catch( JaloBusinessException e )
+		{
+			throw new JaloSystemException( e ,"error creating SellerCarouselComponent : "+e.getMessage(), 0 );
+		}
+	}
+	
+	public SellerCarouselComponent createSellerCarouselComponent(final Map attributeValues)
+	{
+		return createSellerCarouselComponent( getSession().getSessionContext(), attributeValues );
 	}
 	
 	/**

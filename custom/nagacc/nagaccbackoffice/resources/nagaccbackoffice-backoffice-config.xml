@@ -23,4 +23,12 @@
 	   </na:notification-area>
 	</context>
 
+	<context merge-by="type" parent="GenericItem" type="Seller" component="explorer-tree">
+		<explorer-tree:explorer-tree xmlns:explorer-tree="http://www.hybris.com/cockpitng/config/explorertree">
+			<explorer-tree:navigation-node id="group.seller.name">
+				<explorer-tree:type-node code="Seller" id="tab.seller.name"/>
+			</explorer-tree:navigation-node>
+		</explorer-tree:explorer-tree>
+	</context>
+
 </config>

@@ -1,7 +1,7 @@
 /*
  * ----------------------------------------------------------------
  * --- WARNING: THIS FILE IS GENERATED AND WILL BE OVERWRITTEN! ---
- * --- Generated at 09-May-2025, 9:15:00 pm                     ---
+ * --- Generated at 11-May-2025, 2:29:21 pm                     ---
  * ----------------------------------------------------------------
  */
 package org.nagacc.core.constants;
@@ -21,6 +21,7 @@ public class GeneratedNagaccCoreConstants
 		public static final String APPARELSTYLEVARIANTPRODUCT = "ApparelStyleVariantProduct".intern();
 		public static final String ELECTRONICSCOLORVARIANTPRODUCT = "ElectronicsColorVariantProduct".intern();
 		public static final String SELLER = "Seller".intern();
+		public static final String SELLERCAROUSELCOMPONENT = "SellerCarouselComponent".intern();
 		public static final String SWATCHCOLORENUM = "SwatchColorEnum".intern();
 	}
 	public static class Attributes

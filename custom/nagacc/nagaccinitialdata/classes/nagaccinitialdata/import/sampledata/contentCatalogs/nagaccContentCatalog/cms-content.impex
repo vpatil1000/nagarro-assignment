@@ -1,0 +1,42 @@
+# -----------------------------------------------------------------------
+# Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+# -----------------------------------------------------------------------
+# ImpEx for Importing CMS Content
+
+# Macros / Replacement Parameter definitions
+
+
+$contentCatalog = electronicsContentCatalog
+$contentCV = catalogVersion(CatalogVersion.catalog(Catalog.id[default = $contentCatalog]), CatalogVersion.version[default = Staged])[default = $contentCatalog:Staged]
+$productCatalog = electronicsProductCatalog
+$productCV = catalogVersion(catalog(id[default = $productCatalog]), version[default = 'Staged'])[unique = true, default = $productCatalog:Staged]
+$picture = media(code, $contentCV);
+$siteResource = jar:org.assignment.core.constants.NagaccCoreConstants&/nagacccore/import
+
+UPDATE ProductCarouselComponent; $contentCV[unique = true]; uid[unique = true]                          ; products(code, $productCV)
+                               ;                          ; ElectronicsHomepageProductCarouselComponent ; nagProduct1,nagProduct2,nagProduct3,nagProduct4,300938,358639,553637,816802
+
+INSERT_UPDATE MediaFormat;qualifier[unique=true]
+                         ;960x330
+
+INSERT_UPDATE Media; mediaFormat(qualifier); code[unique = true]  ; @media[translator = de.hybris.platform.impex.jalo.media.MediaDataTranslator]; mime[default = 'image/jpeg']; $contentCV; folder(qualifier)
+                   ; 960x330               ; /960x330/seller1.jpg ; $siteResource/images/seller1.jpg                                            ;                             ;           ; images
+                   ; 960x330               ; /960x330/seller2.jpg ; $siteResource/images/seller2.jpg                                            ;                             ;           ; images
+                   ; 960x330               ; /960x330/seller3.jpg ; $siteResource/images/seller3.jpg                                            ;                             ;           ; images
+                   ; 960x330               ; /960x330/seller4.jpg ; $siteResource/images/seller4.jpg                                            ;                             ;           ; images
+
+
+
+INSERT_UPDATE BannerComponent; $contentCV[unique = true]; uid[unique = true]; name                                ; &componentRef ; $picture
+                             ;                          ; Bannerseller1     ; Responsive Image Banner for seller1 ; Bannerseller1 ; /960x330/seller1.jpg
+                             ;                          ; Bannerseller2     ; Responsive Image Banner for seller2 ; Bannerseller2 ; /960x330/seller2.jpg
+                             ;                          ; Bannerseller3     ; Responsive Image Banner for seller3 ; Bannerseller3 ; /960x330/seller3.jpg
+                             ;                          ; Bannerseller4     ; Responsive Image Banner for seller4 ; Bannerseller4 ; /960x330/seller4.jpg
+
+
+
+INSERT_UPDATE SellerCarouselComponent; $contentCV[unique = true]; uid[unique = true]      ; name                   ; &componentRef           ; banners(&componentRef)[mode = append]
+                                     ;                          ; SellerCarouselComponent ; Seller Rotating Images ; SellerCarouselComponent ; Bannerseller1,Bannerseller2,Bannerseller3,Bannerseller4
+
+UPDATE ContentSlot; $contentCV[unique = true]; uid[unique = true]    ; cmsComponents(uid,$contentCV)
+                  ;                          ; Section5Slot-Homepage ;ElectronicsHompageFreeDelBannerComponent,SellerCarouselComponent
