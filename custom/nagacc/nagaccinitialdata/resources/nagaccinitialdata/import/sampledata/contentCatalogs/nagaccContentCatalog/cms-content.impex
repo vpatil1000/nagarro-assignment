@@ -5,11 +5,16 @@ $productCV = catalogVersion(catalog(id[default = $productCatalog]), version[defa
 $picture = media(code, $contentCV);
 $siteResource = jar:org.nagacc.core.constants.NagaccCoreConstants&/images/products
 
+INSERT_UPDATE MediaFormat;qualifier[unique=true]
+                         ;1500Wx300H
+
+
 INSERT_UPDATE Media; mediaFormat(qualifier); code[unique = true]; @media[translator = de.hybris.platform.impex.jalo.media.MediaDataTranslator]; mime[default = 'image/jpeg']; $contentCV; folder(qualifier)
-                   ; 300Wx300H             ; seller1.jpg        ; $siteResource/seller1.jpg                                                   ;                             ;           ; images
-                   ; 300Wx300H             ; seller2.jpg        ; $siteResource/seller2.jpg                                                   ;                             ;           ; images
-                   ; 300Wx300H             ; seller3.jpg        ; $siteResource/seller3.jpg                                                   ;                             ;           ; images
-                   ; 300Wx300H             ; seller4.jpg        ; $siteResource/seller4.jpg                                                   ;                             ;           ; images
+                   ; 1500Wx300H             ; seller1.jpg        ; $siteResource/seller1.jpg                                                   ;                             ;           ; images
+                   ; 1500Wx300H             ; seller2.jpg        ; $siteResource/seller2.jpg                                                   ;                             ;           ; images
+                   ; 1500Wx300H             ; seller3.jpg        ; $siteResource/seller3.jpg                                                   ;                             ;           ; images
+                   ; 1500Wx300H             ; seller4.jpg        ; $siteResource/seller4.jpg                                                   ;                             ;           ; images
+                   ; 1500Wx300H             ; seller5.jpg        ; $siteResource/seller5.jpg                                                   ;                             ;           ; images
 
 
 
@@ -18,11 +23,12 @@ INSERT_UPDATE BannerComponent; $contentCV[unique = true]; uid[unique = true]; na
                              ;                          ; SellerBanner2     ; Seller Banner for seller2 ; SellerBanner2 ; seller2.jpg
                              ;                          ; SellerBanner3     ; Seller Banner for seller3 ; SellerBanner3 ; seller3.jpg
                              ;                          ; SellerBanner4     ; Seller Banner for seller4 ; SellerBanner4 ; seller4.jpg
+                             ;                          ; SellerBanner5     ; Seller Banner for seller5 ; SellerBanner5 ; seller5.jpg
 
 
 
 INSERT_UPDATE SellerCarouselComponent; $contentCV[unique = true]; uid[unique = true]      ; name                   ; &componentRef           ; banners(&componentRef)[mode = append]
-                                     ;                          ; SellerCarouselComponent ; Seller Rotating Images ; SellerCarouselComponent ; SellerBanner1,SellerBanner2,SellerBanner3,SellerBanner4
+                                     ;                          ; SellerCarouselComponent ; Seller Rotating Images ; SellerCarouselComponent ; SellerBanner1,SellerBanner2,SellerBanner3,SellerBanner4,SellerBanner5
 
 UPDATE ContentSlot; $contentCV[unique = true]; uid[unique = true]    ; cmsComponents(uid, $contentCV)
                   ;                          ; Section5Slot-Homepage ; ElectronicsHompageFreeDelBannerComponent,SellerCarouselComponent

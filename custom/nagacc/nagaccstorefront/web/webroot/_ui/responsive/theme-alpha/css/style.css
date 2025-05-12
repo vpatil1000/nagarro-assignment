@@ -17319,6 +17319,9 @@ select[multiple].input-sm {
   overflow: hidden;
   margin: 0;
 }
+#homepage_slider.slider_img {
+  width: 1500px !important;
+}
 #homepage_slider.stripViewer ul {
   margin: 0;
   padding: 0;
@@ -17349,14 +17352,14 @@ select[multiple].input-sm {
 .stripTransmitter {
   overflow: auto;
   padding: 0 15px ;
-  width: 438px !important;
+  width: 1500px !important;
   height: 51px;
   border-bottom: 1px dotted #A5A5A5;
   background-color: #eee;
 }
 .stripTransmitter ul {
   margin: 0;
-  padding: 0;
+  padding-left: 577px;
   position: relative;
   list-style-type: none;
 }

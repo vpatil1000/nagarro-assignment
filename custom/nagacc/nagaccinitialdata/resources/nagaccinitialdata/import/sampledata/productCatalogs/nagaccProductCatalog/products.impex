@@ -99,7 +99,7 @@ INSERT_UPDATE Product; code[unique = true]; $picture                      ; $thu
                      ; 300310003          ; /300Wx300H/300310003-1234.jpg ; /96Wx96H/300310003-1234.jpg ; /1200Wx1200H/300310003-1234.jpg ; /515Wx515H/300310003-1234.jpg,/65Wx65H/300310003-1234.jpg,/30Wx30H/300310003-1234.jpg ; /300Wx300H/300310003-1234.jpg ; /96Wx96H/300310003-1234.jpg ; 300310003-1234 ;
                      ; 300310004          ; /300Wx300H/300310004-1234.jpg ; /96Wx96H/300310004-1234.jpg ; /1200Wx1200H/300310004-1234.jpg ; /515Wx515H/300310004-1234.jpg,/65Wx65H/300310004-1234.jpg,/30Wx30H/300310004-1234.jpg ; /300Wx300H/300310004-1234.jpg ; /96Wx96H/300310004-1234.jpg ; 300310004-1234 ;
 
-INSERT_UPDATE Seller; code[unique = true]; name[en]          ; leadTime
+INSERT_UPDATE Seller; code[unique = true]; name[en]          ; leadTime ;
                     ; seller1            ; BestSeller Inc    ; 3
                     ; seller2            ; SuperDeals Ltd    ; 2
                     ; seller3            ; QuickShip Traders ; 4
