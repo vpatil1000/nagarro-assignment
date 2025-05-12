@@ -17343,14 +17343,14 @@ select[multiple].input-sm {
 .stripTransmitter {
   overflow: auto;
   padding: 0 15px ;
-  width: 438px !important;
+  width: 1500px !important;
   height: 51px;
   border-bottom: 1px dotted #A5A5A5;
   background-color: #eee;
 }
 .stripTransmitter ul {
   margin: 0;
-  padding: 0;
+  padding-left: 550px;
   position: relative;
   list-style-type: none;
 }

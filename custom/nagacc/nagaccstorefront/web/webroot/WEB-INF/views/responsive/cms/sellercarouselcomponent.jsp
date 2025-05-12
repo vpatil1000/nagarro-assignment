@@ -4,7 +4,7 @@
 <%@ taglib prefix="ycommerce" uri="http://hybris.com/tld/ycommercetags" %>
 
 <div class="slider_component simple-banner">
-	<div id="homepage_slider" class="svw slider_img">
+	<div id="homepage_slider" class="svw">
 		<ul>
 			<c:forEach items="${banners}" var="banner" varStatus="status">
 				<c:if test="${ycommerce:evaluateRestrictions(banner)}">
@@ -13,15 +13,15 @@
 						<li>
 							<c:choose>
 								<c:when test="${!ycommerce:validateUrlScheme(encodedUrl)}">
-									<img src="${fn:escapeXml(banner.media.url)}" 
-										alt="${not empty banner.headline ? fn:escapeXml(banner.headline) : fn:escapeXml(banner.media.altText)}" 
+									<img src="${fn:escapeXml(banner.media.url)}"
+										alt="${not empty banner.headline ? fn:escapeXml(banner.headline) : fn:escapeXml(banner.media.altText)}"
 										title="${not empty banner.headline ? fn:escapeXml(banner.headline) : fn:escapeXml(banner.media.altText)}"/>
 								</c:when>
-								
+
 								<c:otherwise>
 									<a tabindex="-1" href="${fn:escapeXml(encodedUrl)}"<c:if test="${banner.external}"> target="_blank" rel="noopener noreferrer"</c:if>>
-										<img src="${fn:escapeXml(banner.media.url)}" 
-											alt="${not empty banner.headline ? fn:escapeXml(banner.headline) : fn:escapeXml(banner.media.altText)}" 
+										<img src="${fn:escapeXml(banner.media.url)}"
+											alt="${not empty banner.headline ? fn:escapeXml(banner.headline) : fn:escapeXml(banner.media.altText)}"
 											title="${not empty banner.headline ? fn:escapeXml(banner.headline) : fn:escapeXml(banner.media.altText)}"/>
 									</a>
 								</c:otherwise>
